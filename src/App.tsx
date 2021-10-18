@@ -7,10 +7,12 @@ import EventsView from "./views/EventsView";
 import SetTapView from "./views/SetTapView";
 import TapsView from "./views/TapsView";
 import GlobalStyle from "./theme/Theme";
+import Navbar from "./components/Navbar";
 
 const App = () => (
     <BrowserRouter>
         <GlobalStyle />
+        <Navbar />
         <Container>
             <Switch>
                 <Route exact path={[routes.homepage, routes.taps]} component={TapsView}/>

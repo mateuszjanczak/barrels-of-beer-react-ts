@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import {IActionEvent} from "../model/response/IActionEvent";
 import {Pagination} from "@material-ui/lab";
 import {ITemperatureEvent} from "../model/response/ITemperatureEvent";
 

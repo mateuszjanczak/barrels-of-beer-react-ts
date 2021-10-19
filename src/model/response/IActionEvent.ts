@@ -1,5 +1,6 @@
 export interface IActionEvent {
     content: IActionEventContent[]
+    totalPages: number
 }
 
 export interface IActionEventContent {

@@ -1,5 +1,6 @@
 export interface ITemperatureEvent {
     content: ITemperatureEventContent[]
+    totalPages: number
 }
 
 export interface ITemperatureEventContent {

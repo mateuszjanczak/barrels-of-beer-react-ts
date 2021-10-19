@@ -31,6 +31,10 @@ class TapService {
     createTap(newTap: INewTap): Promise<Response> {
         return fetch(`${this.API_URL}/taps`, {
             method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify(newTap)
         })
             .then((response) => {
@@ -45,6 +49,10 @@ class TapService {
     setTap(tapDetails: ITapDetails): Promise<Response> {
         return fetch(`${this.API_URL}/taps`, {
             method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify(tapDetails)
         })
             .then((response) => {

@@ -3,6 +3,6 @@ export const routes = {
     taps: '/taps',
     createTap: '/createTap',
     setTap: '/setTap',
-    setTapId: '/setTap/:id',
+    setTapId: '/setTap/:tapId',
     events: '/events'
 }

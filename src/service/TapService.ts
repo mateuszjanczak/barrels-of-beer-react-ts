@@ -46,8 +46,8 @@ class TapService {
             })
     }
 
-    setTap(tapDetails: ITapDetails): Promise<Response> {
-        return fetch(`${this.API_URL}/taps`, {
+    setTap(tapId: number, tapDetails: ITapDetails): Promise<Response> {
+        return fetch(`${this.API_URL}/taps/${tapId}`, {
             method: "POST",
             headers: {
                 'Accept': 'application/json',

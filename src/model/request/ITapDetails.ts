@@ -1,4 +1,4 @@
 export interface ITapDetails {
-    _contentType: string;
+    contentType: string;
     capacity: number;
 }

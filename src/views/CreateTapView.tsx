@@ -41,11 +41,11 @@ class CreateTapView extends React.Component<IProps, IState> {
         return (
             <div>
                 <div className="mb-3">
-                    <label htmlFor="id" className="form-label">Numer kraniku</label>
+                    <label htmlFor="id" className="form-label">Tap ID</label>
                     <input type="number" className="form-control" id="tapId" name="tapId" value={newTap.tapId}
                            onChange={this.handleChange}/>
                 </div>
-                <button className="btn btn-primary" onClick={this.handleSubmit}>Dodaj kranik</button>
+                <button className="btn btn-primary" onClick={this.handleSubmit}>Add tap</button>
                 {this.state.redirect && <Redirect to={routes.taps}/>}
             </div>
         );

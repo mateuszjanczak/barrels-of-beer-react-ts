@@ -49,7 +49,7 @@ class Navbar extends React.Component {
                     <div className={`collapse navbar-collapse ${this.state.visible ? "show" : ""} flex-grow-0`} id="navbarSupportedContent">
                         <ul className="navbar-nav me-auto">
                             <li className="nav-item">
-                                <NavLink to={routes.taps} className="nav-link active" onClick={this.hideNav}>Admin panel</NavLink>
+                                <NavLink to={routes.admin} className="nav-link active" onClick={this.hideNav}>Admin panel</NavLink>
                             </li>
                         </ul>
                     </div>

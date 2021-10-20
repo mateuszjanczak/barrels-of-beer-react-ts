@@ -6,12 +6,13 @@ import {ITemperatureEvent} from "../model/response/ITemperatureEvent";
 type Props = {
     temperatureEvents: ITemperatureEvent
     handleChangePage: (event, page: number) => void
+    handleDownload: () => string
 }
 
 class TemperatureEvent extends React.Component<Props> {
 
     render() {
-        const {temperatureEvents, handleChangePage} = this.props;
+        const {temperatureEvents, handleChangePage, handleDownload} = this.props;
 
         return (
             <>
@@ -22,7 +23,7 @@ class TemperatureEvent extends React.Component<Props> {
                         <thead>
                         {temperatureEvents.content.length > 0 &&
                         <tr>
-                            <th scope="col">Action ID</th>
+                            <th scope="col">Temperature ID</th>
                             <th scope="col">Tap</th>
                             <th scope="col">Barrel content</th>
                             <th scope="col">Temperature</th>
@@ -44,6 +45,10 @@ class TemperatureEvent extends React.Component<Props> {
                     {temperatureEvents.content.length > 0 && <PaginationContainer>
                         <Pagination count={temperatureEvents.totalPages} color="primary" onChange={handleChangePage}/>
                     </PaginationContainer>}
+
+                    {temperatureEvents.content.length > 0 && <Nav>
+                        <a className="btn btn-light" href={handleDownload()}>Export events</a>
+                    </Nav>}
                 </Container>
             </>
         );
@@ -61,6 +66,14 @@ const PaginationContainer = styled.div`
   justify-content: center;
   align-items: center;
   padding: 1rem;
+`;
+
+const Nav = styled.div`
+  text-align: right;
+  margin: 2rem 0;
+  > * {
+    margin: 0 0.5rem;
+  }
 `;
 
 export default TemperatureEvent;

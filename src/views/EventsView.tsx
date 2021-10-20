@@ -3,6 +3,7 @@ import styled from "styled-components";
 import EventsService from "../service/EventService";
 import ActionEvent from "../components/ActionEvent";
 import TemperatureEvent from "../components/TemperatureEvent";
+import DocumentService from "../service/DocumentService";
 
 class EventsView extends React.Component {
 
@@ -42,14 +43,22 @@ class EventsView extends React.Component {
         this.fetchTemperatureEvents(value - 1);
     }
 
+    handleDownloadActionEvents = () => {
+        return DocumentService.getDownloadActionEventsURL()
+    }
+
+    handleDownloadTemperatureEvents = () => {
+        return DocumentService.getDownloadTemperatureEventsURL()
+    }
+
     render() {
         const {actionEvents, temperatureEvents} = this.state;
 
         return (
             <div className="container-fluid">
                 <Heading>Events</Heading>
-                <ActionEvent actionEvents={actionEvents} handleChangePage={this.handleChangePageActionEvents}/>
-                <TemperatureEvent temperatureEvents={temperatureEvents} handleChangePage={this.handleChangePageTemperatureEvents}/>
+                <ActionEvent actionEvents={actionEvents} handleChangePage={this.handleChangePageActionEvents} handleDownload={this.handleDownloadActionEvents}/>
+                <TemperatureEvent temperatureEvents={temperatureEvents} handleChangePage={this.handleChangePageTemperatureEvents} handleDownload={this.handleDownloadTemperatureEvents}/>
             </div>
         );
     }

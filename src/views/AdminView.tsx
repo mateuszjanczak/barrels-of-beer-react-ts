@@ -33,6 +33,11 @@ class AdminView extends React.Component<IProps, IState> {
         AdminService.disableTap(tapId).then(() => alert(`Tap ${tapId} disabled successfully`))
     }
 
+    handleRemoveTap = (tapId: number) => {
+        const agreement = window.confirm(`Are you sure you want to remove tap ${tapId}?`);
+        if (agreement) AdminService.removeTap(tapId).then(() => alert(`Tap ${tapId} removed successfully`))
+    }
+
     render() {
         const {taps} = this.state;
 
@@ -54,6 +59,8 @@ class AdminView extends React.Component<IProps, IState> {
                                             onClick={() => this.handleEnableTap(tapId)}>Enable</button>
                                     <button type="button" className="btn btn-outline-secondary"
                                             onClick={() => this.handleDisableTap(tapId)}>Disable</button>
+                                    <button type="button" className="btn btn-outline-danger"
+                                            onClick={() => this.handleRemoveTap(tapId)}>Remove</button>
                                 </div>
                             </li>
                         ))}

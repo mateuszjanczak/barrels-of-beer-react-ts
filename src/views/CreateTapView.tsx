@@ -1,5 +1,6 @@
 import React from "react";
 import {Redirect} from 'react-router-dom'
+import styled from "styled-components";
 import {routes} from "../routes/Routes";
 import TapService from "../service/TapService";
 import {INewTap} from "../model/request/INewTap";
@@ -39,17 +40,28 @@ class CreateTapView extends React.Component<IProps, IState> {
         const {newTap} = this.state;
 
         return (
-            <div>
+            <Wrapper className="container">
+                <Heading>Create tap</Heading>
+
                 <div className="mb-3">
                     <label htmlFor="id" className="form-label">Tap ID</label>
                     <input type="number" className="form-control" id="tapId" name="tapId" value={newTap.tapId}
                            onChange={this.handleChange}/>
                 </div>
-                <button className="btn btn-primary" onClick={this.handleSubmit}>Add tap</button>
+                <button className="btn btn-light" onClick={this.handleSubmit}>Save</button>
                 {this.state.redirect && <Redirect to={routes.taps}/>}
-            </div>
+            </Wrapper>
         );
     }
 }
+
+const Wrapper = styled.div`
+  margin-bottom: 5rem;
+`;
+
+const Heading = styled.h1`
+  text-align: center;
+  margin: 2rem 0;
+`;
 
 export default CreateTapView;

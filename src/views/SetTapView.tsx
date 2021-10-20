@@ -1,5 +1,6 @@
 import React from "react";
-import {Redirect, RouteComponentProps, withRouter} from "react-router-dom";
+import {Redirect, RouteComponentProps} from "react-router-dom";
+import styled from "styled-components";
 import {ITapDetails} from "../model/request/ITapDetails";
 import TapService from "../service/TapService";
 import {routes} from "../routes/Routes";
@@ -57,7 +58,9 @@ class SetTapView extends React.Component<IProps & RouteComponentProps, IState> {
 
 
         return (
-            <div>
+            <Wrapper className="container">
+                <Heading>Set tap</Heading>
+
                 <div className="mb-3">
                     <label htmlFor="id" className="form-label">Tap</label>
                     <input type="text" className="form-control" id="tapId" value={tapId} disabled/>
@@ -83,12 +86,21 @@ class SetTapView extends React.Component<IProps & RouteComponentProps, IState> {
                            onChange={this.handleChange}/>
                 </div>
 
-                <button className="btn btn-primary" onClick={this.handleSubmit}>Set tap</button>
+                <button className="btn btn-light" onClick={this.handleSubmit}>Save</button>
 
                 {this.state.redirect && <Redirect to={routes.taps}/>}
-            </div>
+            </Wrapper>
         );
     }
 }
 
-export default withRouter(SetTapView);
+const Wrapper = styled.div`
+  margin-bottom: 5rem;
+`;
+
+const Heading = styled.h1`
+  text-align: center;
+  margin: 2rem 0;
+`;
+
+export default SetTapView;

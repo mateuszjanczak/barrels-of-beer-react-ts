@@ -4,5 +4,6 @@ export const routes = {
     createTap: '/createTap',
     setTap: '/setTap',
     setTapId: '/setTap/:tapId',
-    events: '/events'
+    events: '/events',
+    admin: '/admin'
 }

@@ -27,6 +27,19 @@ class AdminService {
                 }
             })
     }
+
+    removeTap(tapId: number): Promise<Response> {
+        return fetch(`${this.API_URL}/admin/tap/${tapId}/remove`, {
+            method: "POST"
+        })
+            .then((response) => {
+                if (response.ok) {
+                    return response.json()
+                } else {
+                    throw new Error('AdminService | removeTap | Error')
+                }
+            })
+    }
 }
 
 export default new AdminService()

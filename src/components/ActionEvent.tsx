@@ -6,12 +6,13 @@ import {Pagination} from "@material-ui/lab";
 type Props = {
     actionEvents: IActionEvent
     handleChangePage: (event, page: number) => void
+    handleDownload: () => string
 }
 
 class ActionEvent extends React.Component<Props> {
 
     render() {
-        const {actionEvents, handleChangePage} = this.props;
+        const {actionEvents, handleChangePage, handleDownload} = this.props;
 
         return (
             <>
@@ -52,6 +53,9 @@ class ActionEvent extends React.Component<Props> {
                         <Pagination count={actionEvents.totalPages} color="primary" onChange={handleChangePage}/>
                     </PaginationContainer>}
                 </Container>
+                {actionEvents.content.length > 0 && <Nav>
+                    <a className="btn btn-light" href={handleDownload()}>Export events</a>
+                </Nav>}
             </>
         );
     }
@@ -68,6 +72,14 @@ const PaginationContainer = styled.div`
   justify-content: center;
   align-items: center;
   padding: 1rem;
+`;
+
+const Nav = styled.div`
+  text-align: right;
+  margin: 2rem 0;
+  > * {
+    margin: 0 0.5rem;
+  }
 `;
 
 export default ActionEvent;

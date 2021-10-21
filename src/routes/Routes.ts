@@ -7,4 +7,5 @@ export const routes = {
     events: '/events',
     admin: '/admin',
     ranking: '/ranking',
+    statistics: '/statistics'
 }

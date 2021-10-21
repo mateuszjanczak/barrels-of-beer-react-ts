@@ -10,6 +10,7 @@ import EventsView from "./views/EventsView";
 import AdminView from "./views/AdminView";
 import RankingView from "./views/RankingView";
 import SetTapView from "./views/SetTapView";
+import StatisticsView from "./views/StatisticsView";
 
 const App = () => (
     <BrowserRouter>
@@ -22,6 +23,7 @@ const App = () => (
                 <Route exact path={routes.events} component={EventsView}/>
                 <Route exact path={routes.admin} component={AdminView}/>
                 <Route exact path={routes.ranking} component={RankingView}/>
+                <Route exact path={routes.statistics} component={StatisticsView}/>
                 <Route path={routes.setTapId} component={SetTapView}/>
             </Switch>
         </Container>

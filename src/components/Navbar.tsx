@@ -44,6 +44,9 @@ class Navbar extends React.Component {
                             <li className="nav-item">
                                 <NavLink to={routes.events} className="nav-link active" onClick={this.hideNav}>Events</NavLink>
                             </li>
+                            <li className="nav-item">
+                                <NavLink to={routes.ranking} className="nav-link active" onClick={this.hideNav}>Ranking</NavLink>
+                            </li>
                         </ul>
                     </div>
                     <div className={`collapse navbar-collapse ${this.state.visible ? "show" : ""} flex-grow-0`} id="navbarSupportedContent">

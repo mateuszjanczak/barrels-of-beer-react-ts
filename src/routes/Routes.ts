@@ -5,5 +5,6 @@ export const routes = {
     setTap: '/setTap',
     setTapId: '/setTap/:tapId',
     events: '/events',
-    admin: '/admin'
+    admin: '/admin',
+    ranking: '/ranking',
 }

@@ -8,6 +8,7 @@ import TapsView from "./views/TapsView";
 import CreateTapView from "./views/CreateTapView";
 import EventsView from "./views/EventsView";
 import AdminView from "./views/AdminView";
+import RankingView from "./views/RankingView";
 import SetTapView from "./views/SetTapView";
 
 const App = () => (
@@ -20,6 +21,7 @@ const App = () => (
                 <Route exact path={routes.createTap} component={CreateTapView}/>
                 <Route exact path={routes.events} component={EventsView}/>
                 <Route exact path={routes.admin} component={AdminView}/>
+                <Route exact path={routes.ranking} component={RankingView}/>
                 <Route path={routes.setTapId} component={SetTapView}/>
             </Switch>
         </Container>

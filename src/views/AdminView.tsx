@@ -3,6 +3,7 @@ import styled from "styled-components";
 import {ITap} from "../model/response/ITap";
 import TapService from "../service/TapService";
 import AdminService from "../service/AdminService";
+import {TableType} from "../model/TableType";
 
 interface IProps {
 }
@@ -35,7 +36,12 @@ class AdminView extends React.Component<IProps, IState> {
 
     handleRemoveTap = (tapId: number) => {
         const agreement = window.confirm(`Are you sure you want to remove tap ${tapId}?`);
-        if (agreement) AdminService.removeTap(tapId).then(() => alert(`Tap ${tapId} removed successfully`))
+        if (agreement) AdminService.removeTap(tapId).then(() => alert(`Tap ${tapId} removed successfully`)).then(() => this.fetchTaps())
+    }
+
+    handleResetDatabase = (tableType: TableType) => {
+        const agreement = window.confirm(`Are you sure you want to reset ${tableType} in database?`);
+        if (agreement) AdminService.resetDatabase(tableType).then(() => alert(`Table ${tableType} deleted successfully`)).then(() => this.fetchTaps())
     }
 
     render() {
@@ -45,7 +51,7 @@ class AdminView extends React.Component<IProps, IState> {
             <Wrapper className="container">
                 <Heading>Admin panel</Heading>
 
-                <Instruction>
+                <Component>
                     <h2>Tap management</h2>
                     <ul className="list-group">
                         {taps.length === 0 && <p>No data</p>}
@@ -55,17 +61,55 @@ class AdminView extends React.Component<IProps, IState> {
                                     Tap ID {tapId}
                                 </span>
                                 <div className="d-flex gap-2">
-                                    <button type="button" className="btn btn-outline-success"
-                                            onClick={() => this.handleEnableTap(tapId)}>Enable</button>
-                                    <button type="button" className="btn btn-outline-secondary"
-                                            onClick={() => this.handleDisableTap(tapId)}>Disable</button>
-                                    <button type="button" className="btn btn-outline-danger"
-                                            onClick={() => this.handleRemoveTap(tapId)}>Remove</button>
+                                    <button type="button" className="btn btn-success"
+                                            onClick={() => this.handleEnableTap(tapId)}>Enable
+                                    </button>
+                                    <button type="button" className="btn btn-secondary"
+                                            onClick={() => this.handleDisableTap(tapId)}>Disable
+                                    </button>
+                                    <button type="button" className="btn btn-danger" onClick={() => this.handleRemoveTap(tapId)}>Remove
+                                    </button>
                                 </div>
                             </li>
                         ))}
                     </ul>
-                </Instruction>
+                </Component>
+
+                <Component>
+                    <h2>Database</h2>
+                    <ul className="list-group">
+                        <li className="list-group-item list-group-item-info d-flex justify-content-between align-items-center">
+                            <span>
+                               Taps
+                            </span>
+                            <div className="d-flex gap-2">
+                                <button type="button" className="btn btn-danger"
+                                        onClick={() => this.handleResetDatabase(TableType.TAPS)}>Remove
+                                </button>
+                            </div>
+                        </li>
+                        <li className="list-group-item list-group-item-info d-flex justify-content-between align-items-center">
+                            <span>
+                                Action Events
+                            </span>
+                            <div className="d-flex gap-2">
+                                <button type="button" className="btn btn-danger"
+                                        onClick={() => this.handleResetDatabase(TableType.ACTION_EVENTS)}>Remove
+                                </button>
+                            </div>
+                        </li>
+                        <li className="list-group-item list-group-item-info d-flex justify-content-between align-items-center">
+                            <span>
+                                Temperature Events
+                            </span>
+                            <div className="d-flex gap-2">
+                                <button type="button" className="btn btn-danger"
+                                        onClick={() => this.handleResetDatabase(TableType.TEMPERATURE_EVENTS)}>Remove
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                </Component>
             </Wrapper>
         );
     }
@@ -80,8 +124,9 @@ const Heading = styled.h1`
   margin: 2rem 0;
 `;
 
-const Instruction = styled.div`
+const Component = styled.div`
   margin-bottom: 2rem;
+
   > h2 {
     margin-bottom: 1rem;
   }

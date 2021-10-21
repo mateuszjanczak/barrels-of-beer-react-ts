@@ -1,3 +1,5 @@
+import {TableType} from "../model/TableType";
+
 class AdminService {
 
     API_URL = "http://localhost:8080/api"
@@ -37,6 +39,19 @@ class AdminService {
                     return response.json()
                 } else {
                     throw new Error('AdminService | removeTap | Error')
+                }
+            })
+    }
+
+    resetDatabase(tableType: TableType): Promise<Response> {
+        return fetch(`${this.API_URL}/admin/database/${tableType}/reset`, {
+            method: "POST"
+        })
+            .then((response) => {
+                if (response.ok) {
+                    return response.json()
+                } else {
+                    throw new Error('AdminService | resetDatabase | Error')
                 }
             })
     }

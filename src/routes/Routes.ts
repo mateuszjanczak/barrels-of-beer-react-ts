@@ -8,5 +8,6 @@ export const routes = {
     admin: '/admin',
     ranking: '/ranking',
     statistics: '/statistics',
-    login: '/login'
+    login: '/login',
+    logout: '/logout'
 }

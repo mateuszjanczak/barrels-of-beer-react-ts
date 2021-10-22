@@ -1,12 +1,17 @@
 import {ITemperatureEvent} from "../model/response/ITemperatureEvent";
 import {IActionEvent} from "../model/response/IActionEvent";
+import AuthService from "./AuthService";
 
 class EventService {
 
     API_URL = "http://localhost:8080/api"
 
     getActionEvents(page: number): Promise<IActionEvent> {
-        return fetch(`${this.API_URL}/events/action/${page}`)
+        return fetch(`${this.API_URL}/events/action/${page}`, {
+            headers: {
+                'Authorization': AuthService.getHeaders()
+            }
+        })
             .then((response) => {
                 if (response.ok) {
                     return response.json()
@@ -17,7 +22,11 @@ class EventService {
     }
 
     getTemperatureEvents(page: number): Promise<ITemperatureEvent> {
-        return fetch(`${this.API_URL}/events/temperature/${page}`)
+        return fetch(`${this.API_URL}/events/temperature/${page}`, {
+            headers: {
+                'Authorization': AuthService.getHeaders()
+            }
+        })
             .then((response) => {
                 if (response.ok) {
                     return response.json()

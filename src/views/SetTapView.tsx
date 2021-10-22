@@ -4,6 +4,7 @@ import styled from "styled-components";
 import {ITapDetails} from "../model/request/ITapDetails";
 import TapService from "../service/TapService";
 import {routes} from "../routes/Routes";
+import AuthService from "../service/AuthService";
 
 interface IProps {
 }
@@ -44,12 +45,17 @@ class SetTapView extends React.Component<IProps & RouteComponentProps, IState> {
     handleSubmit = () => {
         const {tapId} = this.state;
         const {tapDetails} = this.state;
-        TapService.setTap(tapId, tapDetails).then(() => this.setState({redirect: true}));
+        TapService.setTap(tapId, tapDetails).then(() => this.setState({redirect: true})).catch(() => AuthService.refreshToken())
 
     }
 
     fetchTap = (id: number) => {
-        TapService.getTap(id).then((tap) => this.setState({tapDetails: {contentType: tap.barrelContent, capacity: tap.capacity}}))
+        TapService.getTap(id).then((tap) => this.setState({
+            tapDetails: {
+                contentType: tap.barrelContent,
+                capacity: tap.capacity
+            }
+        })).catch(() => AuthService.refreshToken())
     }
 
     render() {

@@ -1,9 +1,10 @@
 import React from "react";
-import {Redirect} from 'react-router-dom'
+import {Redirect} from "react-router-dom";
 import styled from "styled-components";
 import {routes} from "../routes/Routes";
 import TapService from "../service/TapService";
 import {INewTap} from "../model/request/INewTap";
+import AuthService from "../service/AuthService";
 
 interface IProps {
 }
@@ -33,7 +34,7 @@ class CreateTapView extends React.Component<IProps, IState> {
 
     handleSubmit = () => {
         const {newTap} = this.state;
-        TapService.createTap(newTap).then(() => this.setState({redirect: true}))
+        TapService.createTap(newTap).then(() => this.setState({redirect: true})).catch(() => AuthService.refreshToken())
     }
 
     render() {

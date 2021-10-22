@@ -3,6 +3,7 @@ import styled from "styled-components";
 import StatisticsService from "../service/StatisticsService";
 import {IRanking} from "../model/response/IRanking";
 import RankingChart from "../components/RankingChart";
+import AuthService from "../service/AuthService";
 
 interface IProps {
 }
@@ -22,7 +23,7 @@ class RankingView extends React.Component<IProps, IState> {
     }
 
     fetchRanking = () => {
-        StatisticsService.getRanking().then(ranking => this.setState({ranking}))
+        StatisticsService.getRanking().then(ranking => this.setState({ranking})).catch(() => AuthService.refreshToken())
     }
 
     render() {

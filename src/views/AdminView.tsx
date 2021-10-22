@@ -4,6 +4,7 @@ import {ITap} from "../model/response/ITap";
 import TapService from "../service/TapService";
 import AdminService from "../service/AdminService";
 import {TableType} from "../model/TableType";
+import AuthService from "../service/AuthService";
 
 interface IProps {
 }
@@ -23,25 +24,25 @@ class AdminView extends React.Component<IProps, IState> {
     }
 
     fetchTaps = () => {
-        TapService.getTaps().then(taps => this.setState({taps}))
+        TapService.getTaps().then(taps => this.setState({taps})).catch(() => AuthService.refreshToken())
     }
 
     handleEnableTap = (tapId: number) => {
-        AdminService.enableTap(tapId).then(() => alert(`Tap ${tapId} enabled successfully`))
+        AdminService.enableTap(tapId).then(() => alert(`Tap ${tapId} enabled successfully`)).catch(() => AuthService.refreshToken())
     }
 
     handleDisableTap = (tapId: number) => {
-        AdminService.disableTap(tapId).then(() => alert(`Tap ${tapId} disabled successfully`))
+        AdminService.disableTap(tapId).then(() => alert(`Tap ${tapId} disabled successfully`)).catch(() => AuthService.refreshToken())
     }
 
     handleRemoveTap = (tapId: number) => {
         const agreement = window.confirm(`Are you sure you want to remove tap ${tapId}?`);
-        if (agreement) AdminService.removeTap(tapId).then(() => alert(`Tap ${tapId} removed successfully`)).then(() => this.fetchTaps())
+        if (agreement) AdminService.removeTap(tapId).then(() => alert(`Tap ${tapId} removed successfully`)).then(() => this.fetchTaps()).catch(() => AuthService.refreshToken())
     }
 
     handleResetDatabase = (tableType: TableType) => {
         const agreement = window.confirm(`Are you sure you want to reset ${tableType} in database?`);
-        if (agreement) AdminService.resetDatabase(tableType).then(() => alert(`Table ${tableType} deleted successfully`)).then(() => this.fetchTaps())
+        if (agreement) AdminService.resetDatabase(tableType).then(() => alert(`Table ${tableType} deleted successfully`)).then(() => this.fetchTaps()).catch(() => AuthService.refreshToken())
     }
 
     render() {

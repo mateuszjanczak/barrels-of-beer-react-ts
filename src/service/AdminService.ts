@@ -1,4 +1,5 @@
 import {TableType} from "../model/TableType";
+import AuthService from "./AuthService";
 
 class AdminService {
 
@@ -6,7 +7,10 @@ class AdminService {
 
     enableTap(tapId: number): Promise<Response> {
         return fetch(`${this.API_URL}/admin/tap/${tapId}/enable`, {
-            method: "POST"
+            method: "POST",
+            headers: {
+                'Authorization': AuthService.getHeaders()
+            }
         })
             .then((response) => {
                 if (response.ok) {
@@ -19,7 +23,10 @@ class AdminService {
 
     disableTap(tapId: number): Promise<Response> {
         return fetch(`${this.API_URL}/admin/tap/${tapId}/disable`, {
-            method: "POST"
+            method: "POST",
+            headers: {
+                'Authorization': AuthService.getHeaders()
+            }
         })
             .then((response) => {
                 if (response.ok) {
@@ -32,7 +39,10 @@ class AdminService {
 
     removeTap(tapId: number): Promise<Response> {
         return fetch(`${this.API_URL}/admin/tap/${tapId}/remove`, {
-            method: "POST"
+            method: "POST",
+            headers: {
+                'Authorization': AuthService.getHeaders()
+            }
         })
             .then((response) => {
                 if (response.ok) {
@@ -45,7 +55,10 @@ class AdminService {
 
     resetDatabase(tableType: TableType): Promise<Response> {
         return fetch(`${this.API_URL}/admin/database/${tableType}/reset`, {
-            method: "POST"
+            method: "POST",
+            headers: {
+                'Authorization': AuthService.getHeaders()
+            }
         })
             .then((response) => {
                 if (response.ok) {

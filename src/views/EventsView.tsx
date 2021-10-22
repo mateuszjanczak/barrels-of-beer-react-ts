@@ -4,6 +4,7 @@ import EventsService from "../service/EventService";
 import ActionEvent from "../components/ActionEvent";
 import TemperatureEvent from "../components/TemperatureEvent";
 import DocumentService from "../service/DocumentService";
+import AuthService from "../service/AuthService";
 
 class EventsView extends React.Component {
 
@@ -28,11 +29,11 @@ class EventsView extends React.Component {
     }
 
     fetchActionEvents = (page: number) => {
-        EventsService.getActionEvents(page).then(actionEvents => this.setState({actionEvents}))
+        EventsService.getActionEvents(page).then(actionEvents => this.setState({actionEvents})).catch(() => AuthService.refreshToken())
     }
 
     fetchTemperatureEvents = (page: number) => {
-        EventsService.getTemperatureEvents(page).then(temperatureEvents => this.setState({temperatureEvents}))
+        EventsService.getTemperatureEvents(page).then(temperatureEvents => this.setState({temperatureEvents})).catch(() => AuthService.refreshToken())
     }
 
     handleChangePageActionEvents = (event, value) => {
@@ -57,8 +58,10 @@ class EventsView extends React.Component {
         return (
             <div className="container-fluid">
                 <Heading>Events</Heading>
-                <ActionEvent actionEvents={actionEvents} handleChangePage={this.handleChangePageActionEvents} handleDownload={this.handleDownloadActionEvents}/>
-                <TemperatureEvent temperatureEvents={temperatureEvents} handleChangePage={this.handleChangePageTemperatureEvents} handleDownload={this.handleDownloadTemperatureEvents}/>
+                <ActionEvent actionEvents={actionEvents} handleChangePage={this.handleChangePageActionEvents}
+                             handleDownload={this.handleDownloadActionEvents}/>
+                <TemperatureEvent temperatureEvents={temperatureEvents} handleChangePage={this.handleChangePageTemperatureEvents}
+                                  handleDownload={this.handleDownloadTemperatureEvents}/>
             </div>
         );
     }

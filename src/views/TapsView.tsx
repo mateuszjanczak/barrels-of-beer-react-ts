@@ -5,8 +5,10 @@ import TapService from "../service/TapService";
 import {routes} from "../routes/Routes";
 import Tap from "../components/Tap";
 import {ITap} from "../model/response/ITap";
+import AuthService from "../service/AuthService";
 
-interface IProps {}
+interface IProps {
+}
 
 interface IState {
     taps: ITap[]
@@ -23,7 +25,7 @@ class TapsView extends React.Component<IProps, IState> {
     }
 
     fetchTaps = () => {
-        TapService.getTaps().then(taps => this.setState({taps}))
+        TapService.getTaps().then(taps => this.setState({taps})).catch(() => AuthService.refreshToken())
     }
 
     handleRefresh = () => {

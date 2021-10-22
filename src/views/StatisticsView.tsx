@@ -3,6 +3,7 @@ import styled from "styled-components";
 import StatisticsService from "../service/StatisticsService";
 import {IStatistics} from "../model/response/IStatistics";
 import StatisticsChart from "../components/StatisticsChart";
+import AuthService from "../service/AuthService";
 
 interface IProps {
 }
@@ -24,7 +25,7 @@ class StatisticsView extends React.Component<IProps, IState> {
     }
 
     fetchStatistics = (from: string, to: string, interval: number) => {
-        StatisticsService.getStatistics(from, to, interval).then(statistics => this.setState({statistics}))
+        StatisticsService.getStatistics(from, to, interval).then(statistics => this.setState({statistics})).catch(() => AuthService.refreshToken())
     }
 
     handleChange = (event: { target: { name: string; value: any; }; }) => {

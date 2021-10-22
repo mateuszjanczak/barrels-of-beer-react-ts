@@ -1,13 +1,18 @@
 import {INewTap} from "../model/request/INewTap";
 import {ITap} from "../model/response/ITap";
 import {ITapDetails} from "../model/request/ITapDetails";
+import AuthService from "./AuthService";
 
 class TapService {
 
     API_URL = "http://localhost:8080/api"
 
     getTap(id: number): Promise<ITap> {
-        return fetch(`${this.API_URL}/taps/${id}`)
+        return fetch(`${this.API_URL}/taps/${id}`, {
+            headers: {
+                'Authorization': AuthService.getHeaders()
+            }
+        })
             .then((response) => {
                 if (response.ok) {
                     return response.json()
@@ -18,7 +23,11 @@ class TapService {
     }
 
     getTaps(): Promise<ITap[]> {
-        return fetch(`${this.API_URL}/taps`)
+        return fetch(`${this.API_URL}/taps`, {
+            headers: {
+                'Authorization': AuthService.getHeaders()
+            }
+        })
             .then((response) => {
                 if (response.ok) {
                     return response.json()
@@ -33,7 +42,8 @@ class TapService {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': AuthService.getHeaders()
             },
             body: JSON.stringify(newTap)
         })
@@ -51,7 +61,8 @@ class TapService {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': AuthService.getHeaders()
             },
             body: JSON.stringify(tapDetails)
         })

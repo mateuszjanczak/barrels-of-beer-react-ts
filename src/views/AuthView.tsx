@@ -4,7 +4,6 @@ import {Redirect} from "react-router-dom";
 import {routes} from "../routes/Routes";
 import Login from "../components/Login";
 import Register from "../components/Register";
-// import Register from "../components/auth/Register";
 
 class AuthView extends React.Component {
 

@@ -5,39 +5,62 @@ import TapService from "../service/TapService";
 import AdminService from "../service/AdminService";
 import {TableType} from "../model/TableType";
 import AuthService from "../service/AuthService";
+import {IUser} from "../model/response/IUser";
+import UserService from "../service/UserService";
+import {routes} from "../routes/Routes";
 
 interface IProps {
 }
 
 interface IState {
-    taps: ITap[]
+    taps: ITap[],
+    users: IUser[]
 }
 
 class AdminView extends React.Component<IProps, IState> {
 
     state = {
-        taps: []
+        taps: [],
+        users: []
     }
 
     componentDidMount() {
         this.fetchTaps()
+        this.fetchUsers()
     }
 
     fetchTaps = () => {
         TapService.getTaps().then(taps => this.setState({taps})).catch(() => AuthService.refreshToken())
     }
 
+    fetchUsers = () => {
+        UserService.getUsers().then(users => this.setState({users})).catch(() => AuthService.refreshToken())
+    }
+
     handleEnableTap = (tapId: number) => {
-        AdminService.enableTap(tapId).then(() => alert(`Tap ${tapId} enabled successfully`)).catch(() => AuthService.refreshToken())
+        AdminService.enableTap(tapId).then(() => alert(`Tap ${tapId} enabled successfully`)).then(() => this.fetchTaps()).catch(() => AuthService.refreshToken())
     }
 
     handleDisableTap = (tapId: number) => {
-        AdminService.disableTap(tapId).then(() => alert(`Tap ${tapId} disabled successfully`)).catch(() => AuthService.refreshToken())
+        AdminService.disableTap(tapId).then(() => alert(`Tap ${tapId} disabled successfully`)).then(() => this.fetchTaps()).catch(() => AuthService.refreshToken())
     }
 
     handleRemoveTap = (tapId: number) => {
         const agreement = window.confirm(`Are you sure you want to remove tap ${tapId}?`);
         if (agreement) AdminService.removeTap(tapId).then(() => alert(`Tap ${tapId} removed successfully`)).then(() => this.fetchTaps()).catch(() => AuthService.refreshToken())
+    }
+
+    handleEnableUser = (userId: string) => {
+        UserService.enableUser(userId).then(() => alert(`User ${userId} enabled successfully`)).then(() => this.fetchUsers()).catch(() => AuthService.refreshToken())
+    }
+
+    handleDisableUser = (userId: string) => {
+        UserService.disableUser(userId).then(() => alert(`User ${userId} disabled successfully`)).then(() => this.fetchUsers()).catch(() => AuthService.refreshToken())
+    }
+
+    handleRemoveUser = (userId: string, username: string) => {
+        const agreement = window.confirm(`Are you sure you want to remove user ${username}?`);
+        if (agreement) UserService.removeUser(userId).then(() => alert(`User ${username} removed successfully`)).then(() => this.fetchUsers()).catch(() => AuthService.refreshToken())
     }
 
     handleResetDatabase = (tableType: TableType) => {
@@ -46,7 +69,31 @@ class AdminView extends React.Component<IProps, IState> {
     }
 
     render() {
-        const {taps} = this.state;
+        const {taps, users} = this.state;
+
+        const renderTapButton = (tapId: number, isEnabled: boolean) => {
+            return isEnabled ? (
+                <button type="button" className="btn btn-secondary"
+                        onClick={() => this.handleDisableTap(tapId)}>Disable
+                </button>
+            ) : (
+                <button type="button" className="btn btn-success"
+                        onClick={() => this.handleEnableTap(tapId)}>Enable
+                </button>
+            );
+        };
+
+        const renderUserButton = (userId: string, isEnabled: boolean) => {
+            return isEnabled ? (
+                <button type="button" className="btn btn-secondary"
+                        onClick={() => this.handleDisableUser(userId)}>Disable
+                </button>
+            ) : (
+                <button type="button" className="btn btn-success"
+                        onClick={() => this.handleEnableUser(userId)}>Enable
+                </button>
+            );
+        };
 
         return (
             <Wrapper className="container">
@@ -56,18 +103,13 @@ class AdminView extends React.Component<IProps, IState> {
                     <h2>Tap management</h2>
                     <ul className="list-group">
                         {taps.length === 0 && <p>No data</p>}
-                        {taps.map(({tapId}) => (
+                        {taps.map(({tapId, enabled}) => (
                             <li className="list-group-item list-group-item-info d-flex justify-content-between align-items-center">
                                 <span>
                                     Tap ID {tapId}
                                 </span>
                                 <div className="d-flex gap-2">
-                                    <button type="button" className="btn btn-success"
-                                            onClick={() => this.handleEnableTap(tapId)}>Enable
-                                    </button>
-                                    <button type="button" className="btn btn-secondary"
-                                            onClick={() => this.handleDisableTap(tapId)}>Disable
-                                    </button>
+                                    {renderTapButton(tapId, enabled)}
                                     <button type="button" className="btn btn-danger" onClick={() => this.handleRemoveTap(tapId)}>Remove
                                     </button>
                                 </div>
@@ -109,6 +151,25 @@ class AdminView extends React.Component<IProps, IState> {
                                 </button>
                             </div>
                         </li>
+                    </ul>
+                </Component>
+
+                <Component>
+                    <h2>Users</h2>
+                    <ul className="list-group">
+                        {users.length === 0 && <p>No data</p>}
+                        {users.map(({id, username, enabled}) => (
+                            <li className="list-group-item list-group-item-info d-flex justify-content-between align-items-center">
+                                <span>
+                                    {username}
+                                </span>
+                                <div className="d-flex gap-2">
+                                    {renderUserButton(id, enabled)}
+                                    <button type="button" className="btn btn-danger" onClick={() => this.handleRemoveUser(id, username)}>Remove
+                                    </button>
+                                </div>
+                            </li>
+                        ))}
                     </ul>
                 </Component>
             </Wrapper>

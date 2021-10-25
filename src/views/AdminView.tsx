@@ -7,7 +7,6 @@ import {TableType} from "../model/TableType";
 import AuthService from "../service/AuthService";
 import {IUser} from "../model/response/IUser";
 import UserService from "../service/UserService";
-import {routes} from "../routes/Routes";
 
 interface IProps {
 }

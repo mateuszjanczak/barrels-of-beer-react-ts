@@ -1,10 +1,11 @@
+import {API_URL} from "./API";
 import {IRanking} from "../model/response/IRanking";
 import {IStatistics} from "../model/response/IStatistics";
 import AuthService from "./AuthService";
 
 class StatisticsService {
 
-    API_URL = "http://localhost:8080/api"
+    API_URL = API_URL
 
     getRanking(): Promise<IRanking[]> {
         return fetch(`${this.API_URL}/ranking`, {

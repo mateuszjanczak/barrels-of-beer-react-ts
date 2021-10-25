@@ -1,9 +1,10 @@
+import {API_URL} from "./API";
 import {TableType} from "../model/TableType";
 import AuthService from "./AuthService";
 
 class AdminService {
 
-    API_URL = "http://localhost:8080/api"
+    API_URL = API_URL
 
     enableTap(tapId: number): Promise<Response> {
         return fetch(`${this.API_URL}/admin/tap/${tapId}/enable`, {

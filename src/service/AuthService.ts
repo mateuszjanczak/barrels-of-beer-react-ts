@@ -1,9 +1,10 @@
+import {API_URL} from "./API";
 import {ICredentials} from "../model/request/ICredentials";
 import {IToken} from "../model/response/IToken";
 
 class AuthService {
 
-    API_URL = "http://localhost:8080/api"
+    API_URL = API_URL
 
     login(credentials: ICredentials): Promise<any> {
         return fetch(`${this.API_URL}/auth/login`, {
@@ -75,7 +76,7 @@ class AuthService {
     }
 
     getHeaders(): string {
-        if(localStorage.getItem('token') == null) {
+        if (localStorage.getItem('token') == null) {
             return ''
         } else {
             return 'Bearer ' + localStorage.getItem('token')

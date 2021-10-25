@@ -45,11 +45,10 @@ class TemperatureEvent extends React.Component<Props> {
                     {temperatureEvents.content.length > 0 && <PaginationContainer>
                         <Pagination count={temperatureEvents.totalPages} color="primary" onChange={handleChangePage}/>
                     </PaginationContainer>}
-
-                    {temperatureEvents.content.length > 0 && <Nav>
-                        <a className="btn btn-light" href={handleDownload()}>Export events</a>
-                    </Nav>}
                 </Container>
+                {temperatureEvents.content.length > 0 && <Nav>
+                    <a className="btn btn-light" href={handleDownload()}>Export events</a>
+                </Nav>}
             </>
         );
     }

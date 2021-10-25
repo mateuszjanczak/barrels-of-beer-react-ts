@@ -1,10 +1,11 @@
+import {API_URL} from "./API";
 import {ICredentials} from "../model/request/ICredentials";
 import AuthService from "./AuthService";
 import {IUser} from "../model/response/IUser";
 
 class UserService {
 
-    API_URL = "http://localhost:8080/api"
+    API_URL = API_URL
 
     createUser(credentials: ICredentials): Promise<any> {
         return fetch(`${this.API_URL}/users`, {

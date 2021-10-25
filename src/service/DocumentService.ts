@@ -1,6 +1,8 @@
+import {API_URL} from "./API";
+
 class DocumentService {
 
-    API_URL = "http://localhost:8080/api"
+    API_URL = API_URL
 
     getDownloadActionEventsURL(): string {
         return `${this.API_URL}/events/action/download`

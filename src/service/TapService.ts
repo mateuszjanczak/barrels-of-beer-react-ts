@@ -1,3 +1,4 @@
+import {API_URL} from "./API";
 import {INewTap} from "../model/request/INewTap";
 import {ITap} from "../model/response/ITap";
 import {ITapDetails} from "../model/request/ITapDetails";
@@ -5,7 +6,7 @@ import AuthService from "./AuthService";
 
 class TapService {
 
-    API_URL = "http://localhost:8080/api"
+    API_URL = API_URL
 
     getTap(id: number): Promise<ITap> {
         return fetch(`${this.API_URL}/taps/${id}`, {

@@ -1,10 +1,11 @@
+import {API_URL} from "./API";
 import {ITemperatureEvent} from "../model/response/ITemperatureEvent";
 import {IActionEvent} from "../model/response/IActionEvent";
 import AuthService from "./AuthService";
 
 class EventService {
 
-    API_URL = "http://localhost:8080/api"
+    API_URL = API_URL
 
     getActionEvents(page: number): Promise<IActionEvent> {
         return fetch(`${this.API_URL}/events/action/${page}`, {

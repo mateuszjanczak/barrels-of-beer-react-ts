@@ -16,11 +16,13 @@ class AuthService {
             body: JSON.stringify(credentials)
         })
             .then((response) => {
-                if (response.ok) {
-                    return response.json()
-                } else {
-                    throw new Error('AuthService | login | Error')
-                }
+                return response.json()
+                    .then((json) => {
+                        if (response.ok) {
+                            return Promise.resolve(json)
+                        }
+                        return Promise.reject(json)
+                    })
             })
             .then((token: IToken) => {
                 this.saveToken(token.token)

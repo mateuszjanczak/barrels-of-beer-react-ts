@@ -15,7 +15,7 @@ class Login extends React.Component<Props> {
         username: "",
         password: "",
         error: false,
-        errorMsg: ""
+        message: ""
     }
 
     handleChange = (event: { target: { name: string; value: any; }; }) => {
@@ -41,13 +41,15 @@ class Login extends React.Component<Props> {
                 this.context.toggleAuthenticated(true);
                 toggleRedirect();
             })
-            .catch(() => this.setState({error: true, errorMsg: "Error"}))
+            .catch(({message}) => this.setState({error: true, message: message}))
     }
 
     render() {
         return (
             <Wrapper>
-                {this.state.error && <Error>{this.state.errorMsg}</Error>}
+                {this.state.error && <div className="w-100 alert alert-danger">
+                    {this.state.message}
+                </div>}
                 <Label>
                     <input placeholder="Username" className="form-control" name="username" value={this.state.username}
                            onChange={this.handleChange}/>
@@ -64,7 +66,6 @@ class Login extends React.Component<Props> {
 
 const Wrapper = styled.div`
   display: grid;
-  border: 1px solid #333;
   background: white;
   padding: 2.5rem 5rem;
   justify-items: center;
@@ -84,13 +85,6 @@ const Wrapper = styled.div`
 
 const Label = styled.div`
   margin: 1rem;
-`;
-
-const Error = styled.div`
-  width: 30rem;
-  padding: 0.25rem 1rem;
-  background: #F39191;
-  border: 1px solid #24292e;
 `;
 
 export default Login;

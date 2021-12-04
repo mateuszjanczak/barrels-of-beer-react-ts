@@ -11,7 +11,8 @@ class Register extends React.Component {
         username: "",
         password: "",
         error: false,
-        errorMsg: ""
+        message: "",
+        validation: []
     }
 
     handleChange = (event: { target: { name: string; value: any; }; }) => {
@@ -29,21 +30,31 @@ class Register extends React.Component {
             password
         }
 
-        UserService.createUser(credentials).catch(() => this.setState({error: true, errorMsg: "Error"}))
+        UserService.createUser(credentials).catch(({message, validation}) => this.setState({error: true, message: message, validation: validation}))
     }
 
     render() {
         return (
             <Wrapper>
-                {this.state.error && <Error>{this.state.errorMsg}</Error>}
+                {this.state.error && <div className="w-100 alert alert-danger">
+                    {this.state.message}
+                </div>}
                 <Label>
                     <input placeholder="Username" className="form-control" name="username" value={this.state.username}
                            onChange={this.handleChange}/>
                 </Label>
+                {this.state.validation['username'] != null &&
+                <div className="w-100 alert alert-danger">
+                    {this.state.validation['username'].sort((a,b) => a.length - b.length).map((error) => <p>{error}</p>)}
+                </div>}
                 <Label>
                     <input type="password" className="form-control" placeholder="Password" name="password" value={this.state.password}
                            onChange={this.handleChange}/>
                 </Label>
+                {this.state.validation['password'] != null &&
+                <div className="w-100 alert alert-danger">
+                    {this.state.validation['password'].sort((a,b) => a.length - b.length).map((error) => <p>{error}</p>)}
+                </div>}
                 <button className="btn btn-outline-secondary" onClick={this.handleClick}>Create account</button>
             </Wrapper>
         )
@@ -52,7 +63,6 @@ class Register extends React.Component {
 
 const Wrapper = styled.div`
   display: grid;
-  border: 1px solid #333;
   background: white;
   padding: 2.5rem 5rem;
   justify-items: center;
@@ -72,13 +82,6 @@ const Wrapper = styled.div`
 
 const Label = styled.div`
   margin: 1rem;
-`;
-
-const Error = styled.div`
-  width: 30rem;
-  padding: 0.25rem 1rem;
-  background: #F39191;
-  border: 1px solid #24292e;
 `;
 
 export default Register;

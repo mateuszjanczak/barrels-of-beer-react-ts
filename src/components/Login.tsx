@@ -56,7 +56,7 @@ class Login extends React.Component<Props> {
                     <input type="password" className="form-control" placeholder="Password" name="password" value={this.state.password}
                            onChange={this.handleChange}/>
                 </Label>
-                <button className="btn btn-outline-dark" onClick={this.handleClick}>Log in</button>
+                <button className="btn btn-outline-secondary" onClick={this.handleClick}>Log in</button>
             </Wrapper>
         )
     }
@@ -65,11 +65,13 @@ class Login extends React.Component<Props> {
 const Wrapper = styled.div`
   display: grid;
   border: 1px solid #333;
-  background: linear-gradient(0deg, rgba(255, 255, 200, 1) 20%, rgba(255, 255, 225, 1) 100%);
+  background: white;
   padding: 2.5rem 5rem;
   justify-items: center;
   align-self: start;
   justify-self: end;
+  border: 2px solid black;
+  border-radius: 20px 50px;
 
   @media (max-width: 992px) {
     justify-self: center;

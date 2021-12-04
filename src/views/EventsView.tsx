@@ -45,11 +45,11 @@ class EventsView extends React.Component {
     }
 
     handleDownloadActionEvents = () => {
-        return DocumentService.getDownloadActionEventsURL()
+        return DocumentService.downloadActionEventsURL()
     }
 
     handleDownloadTemperatureEvents = () => {
-        return DocumentService.getDownloadTemperatureEventsURL()
+        return DocumentService.downloadTemperatureEventsURL()
     }
 
     render() {

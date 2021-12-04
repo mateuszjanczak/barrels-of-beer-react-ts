@@ -6,7 +6,7 @@ import {Pagination} from "@material-ui/lab";
 type Props = {
     actionEvents: IActionEvent
     handleChangePage: (event, page: number) => void
-    handleDownload: () => string
+    handleDownload: () => Promise<void | Response>
 }
 
 class ActionEvent extends React.Component<Props> {
@@ -54,7 +54,7 @@ class ActionEvent extends React.Component<Props> {
                     </PaginationContainer>}
                 </Container>
                 {actionEvents.content.length > 0 && <Nav>
-                    <a className="btn btn-light" href={handleDownload()}>Export events</a>
+                    <button className="btn btn-light" onClick={handleDownload}>Export events</button>
                 </Nav>}
             </>
         );

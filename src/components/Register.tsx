@@ -44,7 +44,7 @@ class Register extends React.Component {
                     <input type="password" className="form-control" placeholder="Password" name="password" value={this.state.password}
                            onChange={this.handleChange}/>
                 </Label>
-                <button className="btn btn-outline-dark" onClick={this.handleClick}>Create account</button>
+                <button className="btn btn-outline-secondary" onClick={this.handleClick}>Create account</button>
             </Wrapper>
         )
     }
@@ -53,11 +53,13 @@ class Register extends React.Component {
 const Wrapper = styled.div`
   display: grid;
   border: 1px solid #333;
-  background: linear-gradient(0deg, rgba(255, 255, 200, 1) 20%, rgba(255, 255, 225, 1) 100%);
+  background: white;
   padding: 2.5rem 5rem;
   justify-items: center;
   align-self: start;
   justify-self: start;
+  border: 2px solid black;
+  border-radius: 50px 20px;
 
   @media (max-width: 992px) {
     justify-self: center;

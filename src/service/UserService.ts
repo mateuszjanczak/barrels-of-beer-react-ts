@@ -89,7 +89,7 @@ class UserService {
             })
     }
 
-    removeUser(userId: string): Promise<Response> {
+    removeUser(userId: string): Promise<void | Response> {
         return fetch(`${this.API_URL}/users/${userId}`, {
             method: "DELETE",
             headers: {
@@ -98,7 +98,7 @@ class UserService {
         })
             .then((response) => {
                 if (response.ok) {
-                    return response.json()
+                    return Promise.resolve()
                 } else {
                     throw new Error('UserService | removeUser | Error')
                 }

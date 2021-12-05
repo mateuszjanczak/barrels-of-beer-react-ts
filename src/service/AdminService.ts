@@ -38,16 +38,16 @@ class AdminService {
             })
     }
 
-    removeTap(tapId: number): Promise<Response> {
+    removeTap(tapId: number): Promise<void | Response> {
         return fetch(`${this.API_URL}/admin/tap/${tapId}/remove`, {
-            method: "POST",
+            method: "DELETE",
             headers: {
                 'Authorization': AuthService.getHeaders()
             }
         })
             .then((response) => {
                 if (response.ok) {
-                    return response.json()
+                    return Promise.resolve()
                 } else {
                     throw new Error('AdminService | removeTap | Error')
                 }

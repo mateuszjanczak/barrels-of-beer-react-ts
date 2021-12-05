@@ -54,11 +54,11 @@ class AuthService {
 
     removeRefreshToken(refreshToken: string): Promise<any> {
         return fetch(`${this.API_URL}/auth/remove/${refreshToken}`, {
-            method: "POST"
+            method: "DELETE"
         })
             .then((response) => {
                 if (response.ok) {
-                    return response.json()
+                    return Promise.resolve()
                 } else {
                     throw new Error('AuthService | removeRefreshToken | Error')
                 }

@@ -58,7 +58,7 @@ class AuthService {
         })
             .then((response) => {
                 if (response.ok) {
-                    return response.json()
+                    return Promise.resolve()
                 } else {
                     throw new Error('AuthService | removeRefreshToken | Error')
                 }

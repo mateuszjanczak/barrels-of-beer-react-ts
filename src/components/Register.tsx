@@ -30,13 +30,13 @@ class Register extends React.Component {
             password
         }
 
-        UserService.createUser(credentials).catch(({message, validation}) => this.setState({error: true, message: message, validation: validation}))
+        UserService.createUser(credentials).then(() => this.setState({error: false, message: "The account has been created.", validation: []})).catch(({message, validation}) => this.setState({error: true, message: message, validation: validation}))
     }
 
     render() {
         return (
             <Wrapper>
-                {this.state.error && <div className="w-100 alert alert-danger">
+                {this.state.message && <div className={`w-100 alert ${this.state.error ? 'alert-danger' : 'alert-success'}`}>
                     {this.state.message}
                 </div>}
                 <Label>

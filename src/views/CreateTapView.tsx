@@ -10,10 +10,10 @@ interface IProps {
 }
 
 interface IState {
-    newTap: INewTap,
-    redirect: boolean,
-    error: boolean,
-    message: string,
+    newTap: INewTap
+    redirect: boolean
+    error: boolean
+    message: string
     validation: string[]
 }
 
@@ -50,13 +50,14 @@ class CreateTapView extends React.Component<IProps, IState> {
             <Wrapper className="container">
                 <Heading>Create tap</Heading>
 
+                {this.state.error && <div className="w-100 alert alert-danger">
+                    {this.state.message}
+                </div>}
+
                 <div className="mb-3">
-                    {this.state.error && <div className="w-100 alert alert-danger">
-                        {this.state.message}
-                    </div>}
                     <Label htmlFor="id" className="form-label">Tap ID
-                    <input type="number" className="form-control" id="tapId" name="tapId" value={newTap.tapId}
-                           onChange={this.handleChange}/>
+                        <input type="number" className="form-control" id="tapId" name="tapId" value={newTap.tapId}
+                               onChange={this.handleChange}/>
                     </Label>
                     {this.state.validation !== undefined && this.state.validation['tapId'] != null &&
                     <div className="w-100 alert alert-danger">

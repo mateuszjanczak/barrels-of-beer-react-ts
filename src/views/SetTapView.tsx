@@ -13,6 +13,9 @@ interface IState {
     tapId: number
     tapDetails: ITapDetails
     redirect: boolean
+    error: boolean
+    message: string
+    validation: string[]
 }
 
 class SetTapView extends React.Component<IProps & RouteComponentProps, IState> {
@@ -23,7 +26,10 @@ class SetTapView extends React.Component<IProps & RouteComponentProps, IState> {
             contentType: "",
             capacity: 0
         },
-        redirect: false
+        redirect: false,
+        error: false,
+        message: "",
+        validation: []
     }
 
     componentDidMount() {
@@ -45,8 +51,7 @@ class SetTapView extends React.Component<IProps & RouteComponentProps, IState> {
     handleSubmit = () => {
         const {tapId} = this.state;
         const {tapDetails} = this.state;
-        TapService.setTap(tapId, tapDetails).then(() => this.setState({redirect: true})).catch(() => AuthService.refreshToken())
-
+        TapService.setTap(tapId, tapDetails).then(() => this.setState({redirect: true})).catch(({message, validation}) => {this.setState({error: true, message: message, validation: validation}); AuthService.refreshToken();})
     }
 
     fetchTap = (id: number) => {
@@ -67,29 +72,48 @@ class SetTapView extends React.Component<IProps & RouteComponentProps, IState> {
             <Wrapper className="container">
                 <Heading>Set tap</Heading>
 
+                {this.state.error && <div className="w-100 alert alert-danger">
+                    {this.state.message}
+                </div>}
+
                 <div className="mb-3">
-                    <label htmlFor="id" className="form-label">Tap</label>
-                    <input type="text" className="form-control" id="tapId" value={tapId} disabled/>
+                    <Label htmlFor="id" className="form-label">Tap
+                        <input type="text" className="form-control" id="tapId" value={tapId} disabled/>
+                    </Label>
+                    {this.state.validation !== undefined && this.state.validation['tapId'] != null &&
+                    <div className="w-100 alert alert-danger">
+                        {this.state.validation['tapId'].sort((a,b) => a.length - b.length).map((error) => <p>{error}</p>)}
+                    </div>}
                 </div>
 
                 <div className="mb-3">
-                    <label htmlFor="contentType" className="form-label">Content type</label>
-                    <select className="form-select" id="contentType" name="contentType" value={contentType} onChange={this.handleChange}>
-                        <option defaultChecked>Choose from the list</option>
-                        <option value="CHMYZ_Pils">CHMYZ Pils</option>
-                        <option value="GAZDA_Marcowe">GAZDA Marcowe</option>
-                        <option value="KRASA_Weizen">KRASA Weizen</option>
-                        <option value="UPIR_Dunkel">UPIR Dunkel</option>
-                        <option value="KICARZ_Koźlak">KICARZ Koźlak</option>
-                        <option value="KADUK_Podwójny_Koźlak">KADUK Podwójny Koźlak</option>
-                        <option value="SĘDEK_IPA">SĘDEK IPA</option>
-                    </select>
+                    <Label htmlFor="contentType" className="form-label">Content type
+                        <select className="form-select" id="contentType" name="contentType" value={contentType} onChange={this.handleChange}>
+                            <option defaultChecked>Choose from the list</option>
+                            <option value="CHMYZ_Pils">CHMYZ Pils</option>
+                            <option value="GAZDA_Marcowe">GAZDA Marcowe</option>
+                            <option value="KRASA_Weizen">KRASA Weizen</option>
+                            <option value="UPIR_Dunkel">UPIR Dunkel</option>
+                            <option value="KICARZ_Koźlak">KICARZ Koźlak</option>
+                            <option value="KADUK_Podwójny_Koźlak">KADUK Podwójny Koźlak</option>
+                            <option value="SĘDEK_IPA">SĘDEK IPA</option>
+                        </select>
+                    </Label>
+                    {this.state.validation !== undefined && this.state.validation['contentType'] != null &&
+                    <div className="w-100 alert alert-danger">
+                        {this.state.validation['contentType'].sort((a,b) => a.length - b.length).map((error) => <p>{error}</p>)}
+                    </div>}
                 </div>
 
                 <div className="mb-3">
-                    <label htmlFor="capacity" className="form-label">Capacity [ml]</label>
-                    <input type="number" className="form-control" id="capacity" name="capacity" value={capacity}
-                           onChange={this.handleChange}/>
+                    <Label htmlFor="capacity" className="form-label">Capacity [ml]
+                        <input type="number" className="form-control" id="capacity" name="capacity" value={capacity}
+                               onChange={this.handleChange}/>
+                    </Label>
+                    {this.state.validation !== undefined && this.state.validation['capacity'] != null &&
+                    <div className="w-100 alert alert-danger">
+                        {this.state.validation['capacity'].sort((a,b) => a.length - b.length).map((error) => <p>{error}</p>)}
+                    </div>}
                 </div>
 
                 <button className="btn btn-light" onClick={this.handleSubmit}>Save</button>
@@ -107,6 +131,10 @@ const Wrapper = styled.div`
 const Heading = styled.h1`
   text-align: center;
   margin: 2rem 0;
+`;
+
+const Label = styled.div`
+  margin: 1rem 0;
 `;
 
 export default SetTapView;

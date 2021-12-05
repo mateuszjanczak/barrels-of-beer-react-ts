@@ -70,11 +70,13 @@ class TapService {
             body: JSON.stringify(tapDetails)
         })
             .then((response) => {
-                if (response.ok) {
-                    return response.json()
-                } else {
-                    throw new Error('TapService | setTap | Error')
-                }
+                return response.json()
+                    .then((json) => {
+                        if (response.ok) {
+                            return Promise.resolve(json)
+                        }
+                        return Promise.reject(json)
+                    })
             })
     }
 }

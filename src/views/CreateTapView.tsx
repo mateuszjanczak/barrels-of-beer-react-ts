@@ -10,8 +10,11 @@ interface IProps {
 }
 
 interface IState {
-    newTap: INewTap,
+    newTap: INewTap
     redirect: boolean
+    error: boolean
+    message: string
+    validation: string[]
 }
 
 class CreateTapView extends React.Component<IProps, IState> {
@@ -20,7 +23,10 @@ class CreateTapView extends React.Component<IProps, IState> {
         newTap: {
             tapId: 1
         },
-        redirect: false
+        redirect: false,
+        error: false,
+        message: "",
+        validation: []
     }
 
     handleChange = (event: { target: { name: string; value: any; }; }) => {
@@ -34,7 +40,7 @@ class CreateTapView extends React.Component<IProps, IState> {
 
     handleSubmit = () => {
         const {newTap} = this.state;
-        TapService.createTap(newTap).then(() => this.setState({redirect: true})).catch(() => AuthService.refreshToken())
+        TapService.createTap(newTap).then(() => this.setState({redirect: true})).catch(({message, validation}) => {this.setState({error: true, message: message, validation: validation}); AuthService.refreshToken();})
     }
 
     render() {
@@ -44,10 +50,19 @@ class CreateTapView extends React.Component<IProps, IState> {
             <Wrapper className="container">
                 <Heading>Create tap</Heading>
 
+                {this.state.error && <div className="w-100 alert alert-danger">
+                    {this.state.message}
+                </div>}
+
                 <div className="mb-3">
-                    <label htmlFor="id" className="form-label">Tap ID</label>
-                    <input type="number" className="form-control" id="tapId" name="tapId" value={newTap.tapId}
-                           onChange={this.handleChange}/>
+                    <Label htmlFor="id" className="form-label">Tap ID
+                        <input type="number" className="form-control" id="tapId" name="tapId" value={newTap.tapId}
+                               onChange={this.handleChange}/>
+                    </Label>
+                    {this.state.validation !== undefined && this.state.validation['tapId'] != null &&
+                    <div className="w-100 alert alert-danger">
+                        {this.state.validation['tapId'].sort((a,b) => a.length - b.length).map((error) => <p>{error}</p>)}
+                    </div>}
                 </div>
                 <button className="btn btn-light" onClick={this.handleSubmit}>Save</button>
                 {this.state.redirect && <Redirect to={routes.taps}/>}
@@ -63,6 +78,10 @@ const Wrapper = styled.div`
 const Heading = styled.h1`
   text-align: center;
   margin: 2rem 0;
+`;
+
+const Label = styled.div`
+  margin: 1rem 0;
 `;
 
 export default CreateTapView;

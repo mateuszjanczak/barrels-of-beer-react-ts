@@ -46,7 +46,6 @@ class AuthService {
             .then((token: IToken) => {
                 this.saveToken(token.token)
                 this.saveRefreshToken(token.refreshToken)
-                window.location.reload()
             })
             .catch(() => {
                 this.logout()

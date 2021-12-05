@@ -49,11 +49,13 @@ class TapService {
             body: JSON.stringify(newTap)
         })
             .then((response) => {
-                if (response.ok) {
-                    return response.json()
-                } else {
-                    throw new Error('TapService | createTap | Error')
-                }
+                return response.json()
+                    .then((json) => {
+                        if (response.ok) {
+                            return Promise.resolve(json)
+                        }
+                        return Promise.reject(json)
+                    })
             })
     }
 

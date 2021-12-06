@@ -11,7 +11,7 @@ class StatisticsChart extends React.Component {
     }
 
     componentDidUpdate() {
-        this.myChart.data.labels = [...this.props.data.items.map(item => item.date)];
+        this.myChart.data.labels = [...this.props.data.items.map(item => item.date.replaceAll('T', ' ').replaceAll('Z', ' '))];
         this.myChart.data.datasets[0].data = [...this.props.data.items.map(item => item.count / 1000)];
         this.myChart.update();
     }

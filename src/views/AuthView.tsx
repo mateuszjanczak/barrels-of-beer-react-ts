@@ -22,7 +22,7 @@ class AuthView extends React.Component {
         return (
             <Wrapper>
                 <div>
-                    <Heading>Sign in</Heading>
+                    <Heading>Entry</Heading>
                 </div>
                 <Container>
                     <Login toggleRedirect={this.toggleRedirect}/>

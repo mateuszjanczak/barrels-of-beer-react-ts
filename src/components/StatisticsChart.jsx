@@ -35,9 +35,6 @@ class StatisticsChart extends React.Component {
                 animation: false,
                 legend: false,
                 scales: {
-                    xAxis: {
-                        display: false
-                    },
                     xAxes: [{
                         ticks: {
                             display: false
